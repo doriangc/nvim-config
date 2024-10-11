@@ -918,6 +918,7 @@ require('lazy').setup({
       'theHamsta/nvim-dap-virtual-text',
       'nvim-neotest/nvim-nio',
       'williamboman/mason.nvim',
+      'mfussenegger/nvim-dap-python',
     },
     config = function()
       local dap = require 'dap'
@@ -925,6 +926,7 @@ require('lazy').setup({
 
       require('dapui').setup()
       require('dap-go').setup()
+      require('dap-python').setup 'python3'
 
       dap.adapters.cppdbg = {
         id = 'cppdbg',
@@ -954,6 +956,15 @@ require('lazy').setup({
           program = function()
             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
           end,
+        },
+      }
+
+      dap.configurations.python = {
+        {
+          type = 'python',
+          request = 'launch',
+          name = 'Launch Python file',
+          program = '${file}',
         },
       }
 
